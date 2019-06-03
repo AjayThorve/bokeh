@@ -1,6 +1,5 @@
 import * as path from "path"
 import * as ts from "typescript"
-const coffee = require("coffeescript")
 import * as lesscss from "less"
 
 import {compiler_host, parse_tsconfig, default_transformers, compile_files, report_diagnostics, TSOutput, Inputs, Outputs, Path} from "./compiler"
@@ -68,7 +67,7 @@ function normalize(path: string): string {
 
 export async function compile_and_resolve_deps(input: {code: string, lang: string, file: string, bokehjs_dir: string}) {
   const {file, lang, bokehjs_dir} = input
-  let {code} = input
+  const {code} = input
 
   let output: string
   switch (lang) {
@@ -84,12 +83,6 @@ export async function compile_and_resolve_deps(input: {code: string, lang: strin
         output = outputs!.get(js_file)!
       }
       break
-    case "coffeescript":
-      try {
-        code = coffee.compile(code, {bare: true, shiftLine: true})
-      } catch (error) {
-        return {error: error.toString()}
-      }
     case "javascript": {
       const result = compile_javascript(file, code)
       if (result.error == null)
