@@ -1,0 +1,27 @@
+# Dashboard Example
+
+Create a simple dashboard based on Bootstrap templates and react-grid-layout(experimental-inline).
+
+![screenshot](./screenshot-app.png)
+
+## Setting Up
+
+No additional packages or steps are required to run this example.
+
+## Running
+
+To view the app directly from a Bokeh server, navigate to the parent directory
+[`examples/app`](https://github.com/bokeh/bokeh/tree/master/examples/app),
+and execute the command
+
+    bokeh serve --show dash
+
+## Licences
+
+This example uses vendored code from the following projects:
+
+* https://fontawesome.com/license
+
+* https://getbootstrap.com/docs/3.3/getting-started/
+
+* https://github.com/puikinsh/gentelella/blob/master/LICENSE.txt

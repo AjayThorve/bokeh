@@ -1,0 +1,123 @@
+{% extends base %}
+{% block preamble %}
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="dash-react-grid-layout/static/css/style1.css">
+  <link rel="stylesheet" href="dash-react-grid-layout/static/css/style2.css">
+  <!-- Custom Style -->
+  <link href="dash-react-grid-layout/static/css/custom.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js" crossorigin></script>
+  <script src="dash-react-grid-layout/static/js/react-grid-layout.min.js"></script>
+{% endblock %}
+
+{% block contents %}
+
+<div class="container body">
+  <div class="main_container">
+     <!-- page content -->
+
+    <div id="mydiv"></div>
+
+  </div>
+</div>
+<!-- /page content -->
+
+<!-- Load our React component. -->
+<script type="text/babel">
+  let ResponsiveGridLayout = ReactGridLayout.Responsive;
+  class MyFirstGrid extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.temp = [];
+    let stats = {{stats}};
+    
+    console.log({{stats_names}});
+    {{stats_names}}.map((name) =>  {
+      let color = "red"
+      let dir = "desc"
+      let fav = stats[name].icon
+      console.log(stats[name]);
+      if(stats[name].change > 0){
+        color = "green"
+        dir = "asc"
+      }
+      this.temp.push(
+        <div key={name} className="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+          <span className="count_top"><i className={"fa fa-" + fav}></i> {stats[name].label}</span>
+          <div className="count">{stats[name].value}</div>
+          <span className="count_bottom"><i className={color}><i className={"fa fa-sort-" + dir}></i>{stats[name].change} </i> From last Week</span>
+        </div>
+      )
+    })
+  }
+
+  resize_layout(obj) {
+    for(var key in window.Bokeh.index){
+       window.Bokeh.index[key].resize_layout();
+    }
+
+  }
+  render() {
+    // layout is an array of objects, see the demo for more complete usage
+    const layout = [
+      {i: 'z', x: 2, y: 0, w: 8, h: 4, static:true},
+      {i: 'a', x: 1, y: 5, w: 10, h: 7, minW: 9, maxW: 9},
+      {i: 'b', x: 1, y: 15, w: 3, h: 9},
+      {i: 'c', x: 4, y: 15, w: 3, h: 9},
+      {i: 'd', x: 7, y: 15, w: 4, h: 9},
+    ];
+    
+    console.log(this.parent)
+    return <ReactGridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1900} onResize={this.resize_layout} margin={[10,10]}
+                            draggableCancel='.bk-root' 
+    // breakpoints={{ "{" }}{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}{{ "}" }}
+    // cols={{ "{" }} {"lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2}{{ "}" }} 
+    >
+
+          <div key="z" className="row tile_count list">
+            {this.temp}
+          </div>
+           
+            <div key="a" className="x_panel tile">
+              <div className="row x_title">
+                <div className="col-md-12">
+                  <h3>Network Activities <small>Traffic per day</small></h3>
+                </div>
+              </div>
+              {{ embed(roots.line) }}
+            </div>
+            <div key="b" className="x_panel tile">
+              <div className="x_title">
+                <h2>By Region</h2>
+                <div className="clearfix"></div>
+              </div>
+              {{ embed(roots.region) }}
+            </div>
+            <div key="c" className="x_panel tile">
+              <div className="x_title">
+                <h2>By Platform</h2>
+                <div className="clearfix"></div>
+              </div>
+              {{ embed(roots.platform) }}
+            </div>
+            <div key="d" className="x_panel tile">
+              <div className="x_title">
+                <h2>Details</h2>
+                <div className="clearfix"></div>
+              </div>
+              {{ embed(roots.table) }}
+            </div>
+      </ReactGridLayout>
+  }
+}
+
+  ReactDOM.render(<MyFirstGrid />, document.getElementById('mydiv'))
+</script>
+
+{% endblock %}
