@@ -1,0 +1,46 @@
+{% extends base %}
+{% block preamble %}
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- react-grid-layout css-->
+  <link rel="stylesheet" href="precompiled-bundle-example/static/css/react-grid-layout.css">
+  <!-- react-resizable css-->
+  <link rel="stylesheet" href="precompiled-bundle-example/static/css/react-resizable.css">
+  <!-- React development assets -->
+  <link href="precompiled-bundle-example/static/css/custom.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+  <!-- React-grid-layout script -->
+  <script src="precompiled-bundle-example/static/js/react-grid-layout.min.js"></script>
+{% endblock %}
+
+{% block contents %}
+
+<div class="container body">
+  <div class="main_container">
+     <!-- page content -->
+
+    <div id="mydiv"></div>
+
+  </div>
+</div>
+<!-- /page content -->
+
+<!-- Load our React component. -->
+<script src="precompiled-bundle-example/static/js/grid-layout.js"></script>
+<script>
+  generate_dashboard(
+    {{stats}},
+    {{stats_names}},
+    '{{ embed(roots.line) }}',
+    '{{ embed(roots.region) }}',
+    '{{ embed(roots.platform) }}',
+    '{{ embed(roots.table) }}'
+  )
+</script>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{
+  "name": "precompiled-bundle-example",
+  "version": "1.0.0",
+  "description": "Create a simple dashboard based on Bootstrap templates and react-grid-layout(experimental-inline).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2"
+  }
+}
